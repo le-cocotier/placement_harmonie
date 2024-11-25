@@ -15,5 +15,5 @@ void free_response(response *res) {
   free(res->column_name);
   free(res->lines);
   free(res->types);
-  // free(res);
+  free(res);
 }

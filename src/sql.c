@@ -3,7 +3,7 @@
 #include <string.h>
 
 response *sql_select(sqlite3 *db, char *request) {
-  response *res = malloc(sizeof(response *)); // result of query
+  response *res = malloc(sizeof(response)); // result of query
   sqlite3_stmt *stmt;
   int i;
 

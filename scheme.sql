@@ -24,7 +24,7 @@ CREATE TABLE Personne(
    FOREIGN KEY(idInstrument) REFERENCES Instrument(idInstrument)
 );
 
-CREATE TABLE Se_décline(
+CREATE TABLE Se_decline(
    idInstrument INT,
    idPartie VARCHAR(50),
    rangMin INT,

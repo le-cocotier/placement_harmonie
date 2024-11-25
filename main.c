@@ -1,13 +1,9 @@
 #include "lib/data.h"
 #include "lib/sql.h"
 #include <sqlite3.h>
-#include <stdio.h>
 
 int main() {
   sqlite3 *db;
-  sqlite3_stmt *stmt;
-  int i;
-  int num_column;
 
   sqlite3_open("bdd.sqlite", &db);
 
