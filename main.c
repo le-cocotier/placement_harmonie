@@ -1,16 +1,12 @@
 #include "lib/data.h"
+#include "lib/file_io.h"
 #include "lib/sql.h"
 #include <sqlite3.h>
+#include <stdlib.h>
 
 int main() {
-  sqlite3 *db;
 
-  sqlite3_open("bdd.sqlite", &db);
-
-  response *res = sql_select(db, "select * from Instrument");
-  show_response(res);
-  free_response(res);
-  sqlite3_close(db);
+  read_bdb("assets/ohcf.bdb");
 
   return 0;
 }

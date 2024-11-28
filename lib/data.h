@@ -16,8 +16,10 @@ typedef struct response_ {
 } response;
 
 typedef struct personne_ {
-  int id;
-  char *nom_instrument;
+  int id_instrument;
+  int id_partie;
+  char *nom;
+  char *prenom;
 } Personne;
 
 typedef struct link_ {
@@ -27,6 +29,7 @@ typedef struct link_ {
 
 typedef struct list_ {
   Musicien *premier_a_gauche;
+  int nb_place;
 } Rang;
 
 void free_response(response *res);

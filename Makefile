@@ -2,9 +2,11 @@ CC      = clang
 CFLAGS  = -g -Wall
 RM      = rm -f
 LIB	= -l sqlite3
-SRC 	= src/*
+SRC 	= src/*.c
 
 default: all
+
+all: bdd placement
 
 bdd: create.sql scheme.sql
 	./setup.sh
