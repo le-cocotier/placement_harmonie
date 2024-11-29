@@ -6,7 +6,9 @@
 
 int main() {
 
-  read_bdb("assets/ohcf.bdb");
+  Orchestre *orchestre = read_bdb("assets/ohcf.bdb");
+
+  write_bdb("test.bdb", orchestre);
 
   return 0;
 }

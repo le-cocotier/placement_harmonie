@@ -74,12 +74,13 @@ Personne *parse_musicien(char *line) {
   return musicien;
 }
 
-void read_bdb(char *filename) {
+Orchestre *read_bdb(char *filename) {
   FILE *fd = fopen(filename, "r");
   char *line = NULL;
-  Personne **liste_musicien = NULL;
+  Orchestre *orchestre = malloc(sizeof(Orchestre));
+  orchestre->liste_musiciens = NULL;
+  orchestre->nb_musicien = 0;
   int section = 0;
-  int nb_musicien = 0;
   do {
     line = read_line(fd);
     printf("%s\n", line);
@@ -89,15 +90,53 @@ void read_bdb(char *filename) {
       section++;
     } else if (section == 1 && line[0] == '(') {
       // Nouveau musicien
-      ++nb_musicien;
-      liste_musicien =
-          realloc(liste_musicien, nb_musicien * sizeof(Personne *));
-      liste_musicien[nb_musicien - 1] = parse_musicien(line);
-      printf("%d, %s\n", liste_musicien[nb_musicien - 1]->id_instrument,
-             liste_musicien[nb_musicien - 1]->prenom);
+      ++orchestre->nb_musicien;
+      orchestre->liste_musiciens =
+          realloc(orchestre->liste_musiciens,
+                  orchestre->nb_musicien * sizeof(Personne *));
+      orchestre->liste_musiciens[orchestre->nb_musicien - 1] =
+          parse_musicien(line);
+      free(line);
+      printf(
+          "%d, %s\n",
+          orchestre->liste_musiciens[orchestre->nb_musicien - 1]->id_instrument,
+          orchestre->liste_musiciens[orchestre->nb_musicien - 1]->prenom);
     }
+    // TODO read placement
   }
 
   while (strcmp(line, "#+bdb"));
+  printf("%d\n", orchestre->nb_musicien);
   fclose(fd);
+  return orchestre;
+}
+
+void write_bdb(char *filename, Orchestre *orchestre) {
+  int i;
+  char c;
+  FILE *fd = fopen(filename, "w");
+  FILE *bdb = fopen("assets/guillaume.bdb", "r");
+  if (bdb == NULL) {
+    perror("file not found");
+  }
+
+  fprintf(fd, "#+musicien\n");
+
+  for (i = 0; i < orchestre->nb_musicien; ++i) {
+    fprintf(fd, "(%d, %s, %s)\n", orchestre->liste_musiciens[i]->id_instrument,
+            orchestre->liste_musiciens[i]->nom,
+            orchestre->liste_musiciens[i]->prenom);
+  }
+
+  fprintf(fd, "#+placement\n");
+  // TODO
+
+  i = 0;
+
+  while ((c = fgetc(bdb)) != EOF) {
+
+    fprintf(fd, "%c", c);
+  }
+  fclose(fd);
+  fclose(bdb);
 }

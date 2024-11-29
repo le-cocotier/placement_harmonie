@@ -22,15 +22,10 @@ typedef struct personne_ {
   char *prenom;
 } Personne;
 
-typedef struct link_ {
-  Personne pers;
-  struct link_ *voisin_droite;
-} Musicien;
-
-typedef struct list_ {
-  Musicien *premier_a_gauche;
-  int nb_place;
-} Rang;
+typedef struct orchestre_ {
+  int nb_musicien;
+  Personne **liste_musiciens;
+} Orchestre;
 
 void free_response(response *res);
 
